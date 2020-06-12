@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <base href="/"/>
+</head>
+
+<body>
+
+    <form action="/auth/checkLogin" method="post">
+        <div>
+            <label for="id">用户名</label>
+            <input type="text" id="id" name="username"
+                   placeholder="enter your id here">
+        </div><!--/.form-group -->
+        <div>
+            <label for="password">密码</label>
+            <input type="password" id="password" name="password" placeholder="Password">
+        </div><!--/.form-group -->
+        <input type="submit" value="提交">
+    </form><!--/form -->
+
+</body>
+
+</html>
