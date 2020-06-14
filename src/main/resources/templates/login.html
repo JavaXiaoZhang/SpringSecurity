@@ -6,18 +6,16 @@
 </head>
 
 <body>
-
-    <form action="/auth/checkLogin" method="post">
-        <div>
-            <label for="id">用户名</label>
-            <input type="text" id="id" name="username"
-                   placeholder="enter your id here">
-        </div><!--/.form-group -->
-        <div>
-            <label for="password">密码</label>
-            <input type="password" id="password" name="password" placeholder="Password">
-        </div><!--/.form-group -->
-        <input type="submit" value="提交">
+    <div th:if="${param.error}">
+        Invalid username and password.
+    </div>
+    <div th:if="${param.logout}">
+        You have been logged out.
+    </div>
+    <form action="/login" method="post">
+        <div><label> User Name : <input type="text" name="username"/> </label></div>
+        <div><label> Password: <input type="password" name="password"/> </label></div>
+        <div><input type="submit" value="Sign In"/></div>
     </form><!--/form -->
 
 </body>

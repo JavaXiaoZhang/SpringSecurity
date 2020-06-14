@@ -5,14 +5,17 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+/**
+ * @author ZQ
+ */
 @Configuration
 public class MvcConfig implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/auth/home").setViewName("home");
+        registry.addViewController("/home").setViewName("home");
         registry.addViewController("/").setViewName("home");
-        registry.addViewController("/auth/login").setViewName("login");
-        registry.addViewController("/auth/getUserInfo").setViewName("show");
-        registry.addViewController("/auth/checkLogin");
+        registry.addViewController("/hello").setViewName("hello");
+        registry.addViewController("/login").setViewName("login");
+        registry.addViewController("/show").setViewName("show");
     }
 }

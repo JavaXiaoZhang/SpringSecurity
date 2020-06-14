@@ -1,12 +1,7 @@
 package com.zq.controller;
 
-import com.zq.entity.User;
+//import com.zq.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,10 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("auth")
 public class AuthController {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    /*@Autowired
+    private AuthenticationManager authenticationManager;*/
 
-    @GetMapping("home")
+    //已在config中配置路径与view的映射
+    /*@GetMapping("home")
     public String home(){
         return "home";
     }
@@ -28,9 +24,9 @@ public class AuthController {
     @GetMapping("login")
     public String login(){
         return "login";
-    }
+    }*/
 
-    @PostMapping("checkLogin")
+    /*@PostMapping("checkLogin")
     public String checkLogin(User user){
         UsernamePasswordAuthenticationToken
                 upToken = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
@@ -49,6 +45,6 @@ public class AuthController {
             modelMap.put("user",user);
         }
         return "show";
-    }
+    }*/
 
 }

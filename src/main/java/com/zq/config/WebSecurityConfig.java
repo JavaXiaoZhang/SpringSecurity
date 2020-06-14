@@ -1,5 +1,6 @@
 package com.zq.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -11,36 +12,44 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-//@Order(-1)
-//@EnableGlobalMethodSecurity(prePostEnabled=true)//开启security方法注解
+//@EnableGlobalMethodSecurity(prePostEnabled=true)
 @EnableWebSecurity
-@Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private UserDetailsService userDetailsService;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/","/auth/home","/auth/checkLogin").permitAll()
+                .antMatchers("/","/home").permitAll()
+                .antMatchers("/show").hasRole("USER")
                 .anyRequest().authenticated()
                 .and()
             .formLogin()
-                .loginPage("/auth/login")
-                .permitAll()
+                .loginPage("/login").permitAll()
+                .defaultSuccessUrl("/show")
                 .and()
             .logout()
-                .permitAll();
+                .permitAll()
+                .and()
+            .csrf().disable();
     }
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
+        //System.out.println("pwd:"+new BCryptPasswordEncoder().encode("pwd"));
         auth
-            .inMemoryAuthentication()
-                .withUser("zhang").password("123").roles("USER");
+                .userDetailsService(userDetailsService)
+                .passwordEncoder(new BCryptPasswordEncoder());
+
+        //BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        /*auth
+            .inMemoryAuthentication().passwordEncoder(bCryptPasswordEncoder)
+                .withUser("zhang").password(bCryptPasswordEncoder.encode("123456")).roles("USER");*/
     }
 
-    @Override
-    @Bean
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
 }
