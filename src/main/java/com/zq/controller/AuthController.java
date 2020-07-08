@@ -1,6 +1,7 @@
 package com.zq.controller;
 
 import com.zq.annotation.LogPoint;
+import com.zq.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -11,10 +12,16 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("auth")
 public class AuthController {
+
+    @Autowired
+    private IUserService userService;
 
     /*@Autowired
     private AuthenticationManager authenticationManager;*/
@@ -52,4 +59,12 @@ public class AuthController {
         return "show";
     }
 
+    @LogPoint
+    @GetMapping("getList")
+    @ResponseBody
+    public String getList(ModelMap map){
+        List<com.zq.entity.User> list = userService.getList();
+        map.put("list",list);
+        return "hello";
+    }
 }

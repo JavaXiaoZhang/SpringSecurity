@@ -30,8 +30,8 @@ public class LogAspect {
         Object result = joinPoint.proceed();
         log.info("Response:[{}]", JSON.toJSONString(result));
         log.info("执行时间：[{}]ms",System.currentTimeMillis()-startTime);
-        throw new RuntimeException("抛出异常！！！");
-        //return result;
+        //throw new RuntimeException("抛出异常！！！");
+        return result;
     }
 
     /**

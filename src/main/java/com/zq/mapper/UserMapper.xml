@@ -16,4 +16,9 @@
     from user
     where username = #{username}
   </select>
+  <select id="getList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user
+  </select>
 </mapper>

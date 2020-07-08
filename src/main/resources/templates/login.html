@@ -2,7 +2,12 @@
 <html lang="en">
 <html xmlns:th="http://www.thymeleaf.org" >
 <head>
-    <base href="/"/>
+    <script type="text/javascript"  charset="utf-8"
+            src="http://connect.qq.com/qc_jssdk.js"
+            data-appid="101889074"
+            data-redirecturi="http://127.0.0.1:8080/callback"
+            data-callback="true"
+    ></script>
 </head>
 
 <body>
@@ -18,6 +23,12 @@
         <div><input type="submit" value="Sign In"/></div>
     </form><!--/form -->
 
+    <span id="qqLoginBtn"></span>
+    <script type="text/javascript">
+        QC.Login({
+            btnId:"qqLoginBtn"	//插入按钮的节点id
+        });
+    </script>
 </body>
 
 </html>

@@ -6,6 +6,8 @@ import com.zq.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author ZQ
  * @Date 2020/6/14
@@ -19,5 +21,10 @@ public class UserServiceImpl implements IUserService {
     @Override
     public User getByUsername(String username) {
         return userMapper.getByUsername(username);
+    }
+
+    @Override
+    public List<User> getList() {
+        return userMapper.getList();
     }
 }

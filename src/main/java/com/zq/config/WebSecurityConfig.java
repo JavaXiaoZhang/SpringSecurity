@@ -22,12 +22,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService userDetailsService;
 
+    //TODO 加上accessDenied 和 error
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/","/home").permitAll()
-//                .antMatchers("/show").hasRole("user")
-//                .antMatchers("/hello").hasRole("USER")
+                .antMatchers("/show").hasRole("USER")
+                .antMatchers("/hello").hasRole("USER")
                 .anyRequest().authenticated()
                 .and()
             .formLogin()
