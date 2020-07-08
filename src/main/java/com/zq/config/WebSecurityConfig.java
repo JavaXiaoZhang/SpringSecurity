@@ -26,12 +26,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/","/home").permitAll()
-                .antMatchers("/show").hasRole("USER")
+//                .antMatchers("/show").hasRole("user")
+//                .antMatchers("/hello").hasRole("USER")
                 .anyRequest().authenticated()
                 .and()
             .formLogin()
                 .loginPage("/login").permitAll()
-                .defaultSuccessUrl("/show")
+                .defaultSuccessUrl("/auth/getUserInfo")
                 .and()
             .logout()
                 .permitAll()
@@ -44,12 +45,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         //System.out.println("pwd:"+new BCryptPasswordEncoder().encode("pwd"));
         auth
                 .userDetailsService(userDetailsService)
-                .passwordEncoder(new BCryptPasswordEncoder());
+                .passwordEncoder(bCryptPasswordEncoder());
 
         //BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         /*auth
             .inMemoryAuthentication().passwordEncoder(bCryptPasswordEncoder)
                 .withUser("zhang").password(bCryptPasswordEncoder.encode("123456")).roles("USER");*/
+    }
+
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder(){
+        return new BCryptPasswordEncoder();
     }
 
 }

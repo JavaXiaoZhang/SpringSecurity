@@ -7,6 +7,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -23,6 +24,9 @@ public class DaoUserDetailService implements UserDetailsService {
     @Autowired
     private IUserService userService;
 
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userService.getByUsername(username);
@@ -37,6 +41,8 @@ public class DaoUserDetailService implements UserDetailsService {
                 authorityList.add(new SimpleGrantedAuthority(string));
             }
         }
+        System.out.println(authorityList.get(0));
+        //System.out.println(passwordEncoder.encode("123"));
         return new org.springframework.security.core.userdetails.User(user.getUsername(),user.getPassword(),authorityList);
     }
 }
