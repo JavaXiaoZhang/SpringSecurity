@@ -41,7 +41,6 @@ public class DaoUserDetailService implements UserDetailsService {
                 authorityList.add(new SimpleGrantedAuthority(string));
             }
         }
-        System.out.println(authorityList.get(0));
         //System.out.println(passwordEncoder.encode("123"));
         return new org.springframework.security.core.userdetails.User(user.getUsername(),user.getPassword(),authorityList);
     }

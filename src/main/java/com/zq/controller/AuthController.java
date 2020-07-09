@@ -2,6 +2,7 @@ package com.zq.controller;
 
 import com.zq.annotation.LogPoint;
 import com.zq.service.IUserService;
+import com.zq.util.PageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -47,7 +48,7 @@ public class AuthController {
         return "home";
     }*/
 
-    @LogPoint
+    @LogPoint(log = "获取用户信息")
     @GetMapping("getUserInfo")
     public String getUserInfo(ModelMap modelMap){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -63,6 +64,7 @@ public class AuthController {
     @GetMapping("getList")
     @ResponseBody
     public String getList(ModelMap map){
+        PageUtils.setPageParams(0,1);
         List<com.zq.entity.User> list = userService.getList();
         map.put("list",list);
         return "hello";
