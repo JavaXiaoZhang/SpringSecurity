@@ -1,4 +1,4 @@
-package com.zq.config;
+package com.zq.security;
 
 import com.zq.entity.User;
 import com.zq.service.IUserService;

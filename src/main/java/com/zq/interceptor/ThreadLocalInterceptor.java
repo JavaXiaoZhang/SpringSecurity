@@ -36,7 +36,6 @@ public class ThreadLocalInterceptor implements Interceptor {
 
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
-
         // 从 Invocation 中获取参数
         final Object[] queryArgs = invocation.getArgs();
         final MappedStatement ms = (MappedStatement) queryArgs[MAPPEDSTATEMENT_INDEX];

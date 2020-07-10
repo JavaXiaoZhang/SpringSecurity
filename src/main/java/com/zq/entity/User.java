@@ -1,9 +1,14 @@
 package com.zq.entity;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  * @author ZQ
  */
+@ApiModel(value = "用户类",description = "desc")
 public class User {
+    @ApiModelProperty(name = "id")
     private Long id;
     private String username;
     private String password;

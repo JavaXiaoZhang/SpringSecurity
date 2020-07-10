@@ -3,6 +3,10 @@ package com.zq.controller;
 import com.zq.annotation.LogPoint;
 import com.zq.service.IUserService;
 import com.zq.util.PageUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -10,15 +14,13 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("auth")
+@Api(value = "用户认证Controller",tags = "tags")
 public class AuthController {
 
     @Autowired
@@ -50,6 +52,8 @@ public class AuthController {
 
     @LogPoint(log = "获取用户信息")
     @GetMapping("getUserInfo")
+    @ApiOperation(value = "获取用户信息",notes = "notes")
+    @ApiImplicitParams({@ApiImplicitParam(name = "modelMap", value = "回显参数", required = false)})
     public String getUserInfo(ModelMap modelMap){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Object principal = authentication.getPrincipal();
