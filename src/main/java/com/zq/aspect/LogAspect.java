@@ -23,7 +23,7 @@ public class LogAspect {
 
     @Pointcut("@annotation(com.zq.annotation.LogPoint)")
     public void log(){}
-
+    
     @Around("log()")
     public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
         long startTime = System.currentTimeMillis();

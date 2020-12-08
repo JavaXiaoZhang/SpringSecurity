@@ -1,6 +1,7 @@
 package com.zq.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -19,12 +20,17 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Qualifier("daoUserDetailService")
     @Autowired
     private UserDetailsService userDetailsService;
 
-    //TODO 加上accessDenied 和 error
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().mvcMatchers("/js/**","/css/**","/images/**");
+    }
+
+    @Override
+    public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/","/home","/swagger-ui.html").permitAll()
                 .antMatchers("/show").hasRole("USER")
@@ -32,8 +38,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
             .formLogin()
-                .loginPage("/login").permitAll()
+                .loginPage("/login")
+                .loginProcessingUrl("/login")
+                .usernameParameter("username")
+                .passwordParameter("password")
                 .defaultSuccessUrl("/auth/getUserInfo")
+                .permitAll()
                 .and()
             .logout()
                 .permitAll()
