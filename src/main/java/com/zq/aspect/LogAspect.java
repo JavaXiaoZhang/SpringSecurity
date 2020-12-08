@@ -2,11 +2,16 @@ package com.zq.aspect;
 
 import com.alibaba.fastjson.JSON;
 import com.zq.annotation.LogPoint;
+import com.zq.entity.User;
+import com.zq.service.IUserService;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -21,12 +26,16 @@ public class LogAspect {
 
     private Logger log = LoggerFactory.getLogger(getClass());
 
+    @Autowired
+    private IUserService userService;
+
     @Pointcut("@annotation(com.zq.annotation.LogPoint)")
     public void log(){}
     
     @Around("log()")
     public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
         long startTime = System.currentTimeMillis();
+
         Object result = joinPoint.proceed();
         log.info("Response:[{}]", JSON.toJSONString(result));
         log.info("执行时间：[{}]ms",System.currentTimeMillis()-startTime);

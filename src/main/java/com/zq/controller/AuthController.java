@@ -25,15 +25,8 @@ import java.util.List;
 public class AuthController {
 
     @Autowired
-    private static IUserService userService;
+    private IUserService userService;
 
-    @Autowired
-    private static IUserService userService2;
-
-    static {
-        System.out.println(userService);
-        System.out.println(userService2);
-    }
     /*@Autowired
     private AuthenticationManager authenticationManager;*/
 
@@ -67,18 +60,11 @@ public class AuthController {
         Object principal = authentication.getPrincipal();
         if (principal instanceof UserDetails){
             User user = (User)principal;
-            com.zq.entity.User user1 = userService.getByUsername(user.getUsername());
-            if (user1.getLegalPerson().equals("srcb")){
-                // TODO 做数据源的切换
-                DynamicDataSourceContextHolder.setDataSourceType("haif");
-                com.zq.entity.User user2 = userService.getByUsername(user.getUsername());
-                DynamicDataSourceContextHolder.setDataSourceType("admin");
-                com.zq.entity.User user3 = userService.getByUsername(user.getUsername());
-            }
+            com.zq.entity.User byUsername = userService.getByUsername(user.getUsername());
             modelMap.put("user",user);
         }
         System.out.println("返回数据。。。。");
-        LogPoint logPoint = this.getClass().getAnnotation(LogPoint.class);
+        //LogPoint logPoint = this.getClass().getAnnotation(LogPoint.class);
 
         return "show";
     }

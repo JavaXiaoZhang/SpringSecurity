@@ -19,6 +19,7 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
 
     @Override
     protected Object determineCurrentLookupKey() {
+        // TODO 将数据库信息存在redis中
         return DynamicDataSourceContextHolder.getDataSourceType();
     }
 }

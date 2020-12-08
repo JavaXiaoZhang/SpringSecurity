@@ -1,5 +1,7 @@
 package com.zq.security;
 
+import com.zq.datasource.DynamicDataSourceContextHolder;
+import com.zq.datasource.TestConfig;
 import com.zq.entity.User;
 import com.zq.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +33,12 @@ public class DaoUserDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userService.getByUsername(username);
         if (user==null){
-            throw new UsernameNotFoundException("用户不存在！");
+            // 切换数据源
+            DynamicDataSourceContextHolder.setDataSourceType("haif");
+            user = userService.getByUsername(username);
+            if (user==null){
+                throw new UsernameNotFoundException("用户不存在！");
+            }
         }
         List<SimpleGrantedAuthority> authorityList = new ArrayList<>();
         String roles = user.getRoles();
@@ -44,4 +51,5 @@ public class DaoUserDetailService implements UserDetailsService {
         //System.out.println(passwordEncoder.encode("123"));
         return new org.springframework.security.core.userdetails.User(user.getUsername(),user.getPassword(),authorityList);
     }
+
 }
